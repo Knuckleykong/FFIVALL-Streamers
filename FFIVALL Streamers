@@ -300,20 +300,24 @@ async def on_ready():
         print(f"❌ Sync error: {e}")
 
     # Clean up leftover notifications
-    guild   = client.get_guild(GUILD_ID)
+    guild = client.get_guild(GUILD_ID)
     channel = guild.get_channel(CHANNEL_ID) if guild else None
     if channel:
-        for user,info in list(active_notifications.items()):
+        for user, info in list(active_notifications.items()):
             try:
-                await channel.fetch_message(info["message_id"]).delete()
+                msg = await channel.fetch_message(info["message_id"])
+                await msg.delete()
                 print(f"🗑️ Removed old notif for {user}")
-            except:
-                pass
+            except discord.NotFound:
+                print(f"⚠️ Notification for {user} already gone.")
+            except Exception as e:
+                print(f"❌ Error removing old notif for {user}: {e}")
             active_notifications.pop(user, None)
         save_active_notifications(active_notifications)
     else:
         print("❌ Couldn't find channel for cleanup.")
 
+    # Start Twitch check loop if not already running
     if not check_twitch_status_task.is_running():
         check_twitch_status_task.start()
 
