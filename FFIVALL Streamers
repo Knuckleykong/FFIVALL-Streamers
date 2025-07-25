@@ -33,7 +33,7 @@ if not is_admin():
         sys.exit(0)
 
 # === Load Environment Variables ===
-load_dotenv(r"C:\Users\Administrator\Desktop\FFIVALL Bot\FFIVALL.env")
+load_dotenv(r"path_to_file")
 
 # === Bot Settings ===
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -42,13 +42,9 @@ CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 TWITCH_CLIENT_ID = os.getenv("TWITCH_CLIENT_ID")
 TWITCH_CLIENT_SECRET = os.getenv("TWITCH_CLIENT_SECRET")
 REGISTER_FILE = os.getenv("REGISTER_FILE", "registered_twitch.json")
-
-# === Files for dynamic filters ===
-ALLOWED_GAMES_FILE = r"C:\Users\Administrator\Desktop\FFIVALL Bot\allowed_games.json"
-KEYWORD_FILTERS_FILE = r"C:\Users\Administrator\Desktop\FFIVALL Bot\allowed_keywords.json"
-
-# === Persistence file for active notifications ===
-ACTIVE_NOTIFICATIONS_FILE = r"C:\Users\Administrator\Desktop\FFIVALL Bot\active_notifications.json"
+ALLOWED_GAMES_FILE = os.getenv("ALLOWED_GAMES_FILE", "allowed_games.json")
+KEYWORD_FILTERS_FILE = os.getenv("KEYWORD_FILTERS_FILE", "allowed_keywords.json")
+ACTIVE_NOTIFICATIONS_FILE = os.getenv("ACTIVE_NOTIFICATIONS_FILE", "active_notifications.json")
 
 # === Base Filters ===
 BASE_ALLOWED_GAMES = [game.lower() for game in ["Final Fantasy", "Final Fantasy IV", "Final Fantasy VI", "Final Fantasy Mystic Quest"]]
